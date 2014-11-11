@@ -29,28 +29,6 @@ public class Game {
 				
 				firstFreeRow = Resources.freeRowPosition(column, board); 
 
-				// FUNCIÓN DE PRUEBA
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				
-				// board.testBoard(); 
-				// Te pone una columna a white
-				
-				// board.testBoard(); // Te pone una columna a white
-				
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				// BORRAR!!!!!
-				
-				
-				
 				if (firstFreeRow == - 1) {
 					validMove = false;
 				}
@@ -208,7 +186,7 @@ public class Game {
 	/***
 	 * Check Vertical tiles 
 	 * Comprueba si hay en alguna columna se ha formado una tile con  
-	 * la dimensiï¿½n de la constante para ganar
+	 * la dimension de la constante para ganar
 	 */
 	
 	public boolean checkVertical() {

@@ -69,14 +69,12 @@ public class Controller {
 					break;
 					
 				}
-
+				
+				// If it's finished. Then exit the loop.
+				
 				if (game.getFinished()) {
 					exit = true;
 				}
-				 
-				// if is_finished then Comprobamos el ganador
-				// els if (!is_finished) then comprobar si ha ganado alguien
-				//	--> Si ha ganado alguien, entonces finished = true
 				
 			/* 
 			else
