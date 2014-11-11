@@ -1,8 +1,6 @@
 package tp.pr1.control;
 
 import java.util.Scanner;
-
-import tp.pr1.logic.Counter;
 import tp.pr1.logic.Game;
 import tp.pr1.resources.Resources;
 
@@ -17,14 +15,16 @@ public class Controller {
 
 	public void run() {
 		int option, col;
-		String colour;
 		boolean exit = false;
 		boolean valid = false;
 		boolean undo;
 		
 		do {
+			/*
 			if(!game.isFinished())
 			{
+			*/
+				game.printBoard();
 				option = Resources.menu();
 				
 				switch(option) {
@@ -69,18 +69,22 @@ public class Controller {
 					break;
 					
 				}
-				
-				game.printBoard();
-				
+
+				if (game.getFinished()) {
+					exit = true;
+				}
+				 
 				// if is_finished then Comprobamos el ganador
 				// els if (!is_finished) then comprobar si ha ganado alguien
 				//	--> Si ha ganado alguien, entonces finished = true
-			}
+				
+			/* 
 			else
 			{
 				exit = true;
 				System.out.println("GAME IS OVER");
 			}
+			*/
 			
 		} while(!exit);
 		

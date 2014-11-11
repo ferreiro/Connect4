@@ -14,6 +14,7 @@ public class Game {
 	public Game() {
 		numUndo = 0;
 		turn = Counter.WHITE;
+		this.winner = Counter.EMPTY;
 		this.board = new Board(Resources.BOARD_DIMX, Resources.BOARD_DIMY);
 		undoStack = new int[board.getWidth() * board.getHeight()]; //maximo de deshacer igual al numero max de casillas		
 	}
@@ -23,10 +24,34 @@ public class Game {
 		boolean validMove = true;
 		int firstFreeRow = 1; // creo que aunque pensemos con la logica de una persona esto puede ser 0 porque se inicializa siempre aun asi probamos con 1
 		
-		if (column >= 1 && column <= Resources.BOARD_DIMX) {
+		if ((column >= 1) && (column <= Resources.BOARD_DIMX)) {
 			if (colour == turn) {
+				
 				firstFreeRow = Resources.freeRowPosition(column, board); 
-				if (firstFreeRow == -1) {
+
+				// FUNCIÓN DE PRUEBA
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				
+				// board.testBoard(); 
+				// Te pone una columna a white
+				
+				// board.testBoard(); // Te pone una columna a white
+				
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				// BORRAR!!!!!
+				
+				
+				
+				if (firstFreeRow == - 1) {
 					validMove = false;
 				}
 				else 
@@ -34,17 +59,17 @@ public class Game {
 					board.setPosition(firstFreeRow, column, colour); 
 					increaseStack(column);
 					
-					/** Is the game finished? **/
-					finished = isFinished();
+					finished = isFinished(); // Is the game finish?
 					
-					if (!finished) {
+					if (finished) {
+						Counter counterWinner = winner;
+						if (counterWinner != Counter.EMPTY) {
+							System.out.println("The winner is " + counterWinner);
+						}						
+					}
+					else {
 						System.out.println("change turn");
 						changeTurn(); 
-					}
-					else
-					{
-						Counter turn = getTurn();
-						System.out.println("The winner is " + turn);
 					}
 				}
 			}
@@ -95,31 +120,23 @@ public class Game {
 		board.emptyCells();		
 	}
 	
-	public boolean isWon()//comprueba si ha ganado alguien
+	public boolean isFinished()//comprueba las dos anteriores a la vez
 	{
-		boolean finished = false; 
+		boolean finished = false;
 		
-		finished = checkHorizontal();
-
-		if (!finished) {
-			finished = checkVertical();
-			if (!finished) {
-				finished = checkDiagonal1();
-				if (!finished) {
-					finished = checkDiagonal2();
-				}
-			}
-		}
-		
+		if (fullBoard() || isWon()) {
+			finished = true; 		
+		} 
+		 
 		return finished;
 	}
 	
-	public boolean fullBoard()//comprueba si esta el tablero lleno
+	public boolean fullBoard()	//comprueba si esta el tablero lleno
 	{
 		int i = 1, j = 1;
 		boolean full = true;
-		while(i <= board.getHeight()) {
-			while(j <= board.getWidth()) {
+		while((i <= board.getHeight()) && (full)) {
+			while(j <= board.getWidth() && (full)) {
 				if (board.getPosition(i, j) == Counter.EMPTY) {
 					full = false;
 				}
@@ -129,18 +146,26 @@ public class Game {
 		}
 		return full;
 	}
-	
-	public boolean isFinished()//comprueba las dos anteriores a la vez
+
+	public boolean isWon()//comprueba si ha ganado alguien
 	{
-		boolean finished = false;
+		boolean won = false; 
 		
-		if (fullBoard() || isWon())
-		{
-			finished = true;
+		won = checkHorizontal();
+
+		if (!won) {
+			won = checkVertical();
+			if (!won) {
+				won = checkDiagonal1();
+				if (!won) {
+					won = checkDiagonal2();
+				}
+			}
 		}
-		return finished;
+		
+		return won;
 	}
-	
+
 	/***
 	 * Check horizontal 
 	 * Comprueba si hay alguna fila horizontal donde se hayan formado 
@@ -160,6 +185,7 @@ public class Game {
 			
 			while((!formedTiles) && (column <= board.getWidth())) 
 			{
+				counter = board.getPosition(row, column);
 				if ((board.getPosition(row, column) == counter) && board.getPosition(row, column) != Counter.EMPTY) //estaba solo la primera condicion
 				{
 					tilesCounter++;					
@@ -170,7 +196,6 @@ public class Game {
 				else
 				{
 					tilesCounter = 0;
-					counter = board.getPosition(row, column);
 				}
 				
 				column++;
@@ -199,17 +224,18 @@ public class Game {
 			
 			while((!formedTiles) && (row <= board.getHeight())) 
 			{
+				counter = board.getPosition(row, column);
 				if ((board.getPosition(row, column) == counter) && board.getPosition(row, column) != Counter.EMPTY) 
 				{
 					tilesCounter++;					
 					if (tilesCounter == Resources.TILES_TO_WIN) {
 						formedTiles = true;
+						this.winner = counter;
 					}
 				}
 				else
 				{
-					tilesCounter = 0;
-					counter = board.getPosition(row, column);
+					tilesCounter = 0; 
 				}
 				
 				row++;
@@ -250,6 +276,7 @@ public class Game {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
 						formedTiles = true;
+						this.winner = counter;
 					}
 				}
 				else {
@@ -279,6 +306,7 @@ public class Game {
 						tilesCounter++;
 						if (tilesCounter == Resources.TILES_TO_WIN) {
 							formedTiles = true;
+							this.winner = counter;
 						}
 					}
 					else {
@@ -325,6 +353,7 @@ public class Game {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
 						formedTiles = true;
+						this.winner = counter;
 					}
 				}
 				else {
@@ -353,6 +382,7 @@ public class Game {
 						tilesCounter++;
 						if (tilesCounter == Resources.TILES_TO_WIN) {
 							formedTiles = true;
+							this.winner = counter;
 						}
 					}
 					else {
@@ -372,7 +402,11 @@ public class Game {
 	{
 		return turn;
 	}
-	
+
+	public boolean getFinished() {
+		return finished;
+	}
+ 
 	public void changeTurn ()
 	{
 		if (turn == Counter.WHITE) {
