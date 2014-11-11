@@ -15,7 +15,7 @@ public class Board {
 		} 
 		
 		board = new Counter[tx][ty];
-		emptyCells(); // A�adir m�todo para inicializar
+		emptyCells(); // Anadir metodo para inicializar
 	}
 	
 	public Counter [][] getBoard() {
