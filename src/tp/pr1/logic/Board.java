@@ -15,7 +15,7 @@ public class Board {
 		} 
 		
 		board = new Counter[tx][ty];
-		emptyCells(); // Anadir metodo para inicializar
+		emptyCells(); // Metodo para inicializar el tablero
 	}
 	
 	public Counter [][] getBoard() {
@@ -49,10 +49,22 @@ public class Board {
 	 
 	public String toString() {
 		String line = "";
+		for (int i = 0; i <= width; i++) {
+			if (i == 0) {
+				line += "   -";
+			}
+			if ((i > 0) && (i <= width)) {
+				line += i;
+			}
+			if (i == width) {
+				line += "- ";
+			}
+		}
+		line += " \n";
 		
 		for (int i = 1; i <= height; i++) 
 		{
-			line += "| ";
+			line +=i + " | ";
 			
 			for (int j = 1; j <= width; j++) 
 			{	
@@ -75,11 +87,11 @@ public class Board {
 		
 		for (int i = 0; i < width; i++) {
 			if (i == 0) {
-				line += "--";
+				line += "  --";
 			}
 			line += "-";
 			if (i == width - 1) {
-				line += "--";
+				line += "-- ";
 			}
 		}
 		
