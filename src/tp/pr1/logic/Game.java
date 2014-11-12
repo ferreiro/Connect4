@@ -12,11 +12,11 @@ public class Game {
 	private int numUndo;
 	
 	public Game() {
-		numUndo = 0;
-		turn = Counter.WHITE;
+		this.numUndo = 0;
+		this.turn = Counter.WHITE;
 		this.winner = Counter.EMPTY;
 		this.board = new Board(Resources.BOARD_DIMX, Resources.BOARD_DIMY);
-		undoStack = new int[board.getWidth() * board.getHeight()]; //maximo de deshacer igual al numero max de casillas		
+		this.undoStack = new int[board.getWidth() * board.getHeight()]; //maximo de deshacer igual al numero max de casillas		
 	}
 	
 	public boolean executeMove(Counter colour, int column)
@@ -39,16 +39,9 @@ public class Game {
 					
 					finished = isFinished(); // Is the game finish?
 					
-					if (finished) {
-						Counter counterWinner = winner;
-						if (counterWinner != Counter.EMPTY) {
-							System.out.println("The winner is " + counterWinner);
-						}						
-					}
-					else {
-						System.out.println("change turn");
-						changeTurn(); 
-					}
+					if (!finished) {
+						changeTurn();  // No ha terminado. Change the turn!
+					} 
 				}
 			}
 			else
@@ -117,10 +110,12 @@ public class Game {
 		return full;
 	}
 
-	public boolean isWon()//comprueba si ha ganado alguien
+	 // Comprueba si ha ganado alguien
+	
+	public boolean isWon()
 	{
 		boolean won = false; 
-		
+		 
 		won = checkHorizontal();
 
 		if (!won) {
@@ -166,7 +161,7 @@ public class Game {
 					tilesCounter++;
 					if (tilesCounter == 4) {
 						isFormed = true;
-						winner = counter;
+						this.winner = counter;
 					}
 				}
 				else {
@@ -211,7 +206,7 @@ public class Game {
 					tilesCounter++;
 					if (tilesCounter == 4) {
 						isFormed = true;
-						winner = counter;
+						this.winner = counter;
 					}
 				}
 				else {

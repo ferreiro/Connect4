@@ -15,9 +15,9 @@ public class Board {
 		} 
 		
 		board = new Counter[tx][ty];
-		emptyCells(); // Metodo para inicializar el tablero
+		emptyCells(); // Metodo para inicializar el tablero		
 	}
-	
+
 	public Counter [][] getBoard() {
 		return board;
 	}
@@ -34,8 +34,7 @@ public class Board {
 		return board[x - 1][y - 1];
 	}
 	
-	public void setPosition(int x, int y, Counter colour) {
-		System.out.println(colour);
+	public void setPosition(int x, int y, Counter colour) { 
 		board[x - 1][y - 1] = colour;
 	}
 	 
