@@ -74,17 +74,9 @@ public class Game {
 		int columnToUndo, rowToUndo; 
 		
 		if (numUndo > 0) {
-			System.out.println("UNDO");
-			System.out.println("numUndo"+numUndo);
-			
 			columnToUndo = undoStack[numUndo - 1];
-			System.out.println("columnToUndo"+columnToUndo);
-			
 			rowToUndo = Resources.occupiedRowPosition(board, columnToUndo); 
-			System.out.println("rowToUndo"+rowToUndo);
-			
 			board.setPosition(rowToUndo, columnToUndo, Counter.EMPTY); 
-			System.out.println("Get position"+board.getPosition(rowToUndo, columnToUndo));
 			
 			success = true;
 			numUndo--;
@@ -150,37 +142,43 @@ public class Game {
 	 * Y si es igual a la constante para ganar, finaliza el bucle
 	 */
 	
+	// He vuelto a escribir esta funcion desde 0. Parece que funciona
+	// La logica que sigue es comparar la celda actual con la siguiente
+	
 	public boolean checkHorizontal() {
-		boolean formedTiles = false;
-		int row = 1, column = 1, tilesCounter;
-		Counter counter; 
+		boolean isFormed = false;
+		int tilesCounter, row, column;
+		Counter counter, nextCounter;
 		
-		while((!formedTiles) && (row <= board.getHeight())) 
-		{
-			column = 1; // Reset the Colum to 1	
-			counter = board.getPosition(row, column);
-			tilesCounter = 0;//estaba en uno y siempre contaba uno menos
+		row = board.getHeight(); // Starts at bottom
+		
+		while((row >= 1) && (!isFormed)) 
+		{	
+			tilesCounter = 1; // Reset counter
+			column = 1; // Starts at first position
+			counter = board.getPosition(row, column); // Color of first cell on each iteration
 			
-			while((!formedTiles) && (column <= board.getWidth())) 
+			while ((column < Resources.BOARD_DIMX) && (!isFormed)) 
 			{
-				counter = board.getPosition(row, column);
-				if ((board.getPosition(row, column) == counter) && board.getPosition(row, column) != Counter.EMPTY) //estaba solo la primera condicion
-				{
-					tilesCounter++;					
-					if (tilesCounter == Resources.TILES_TO_WIN) {
-						formedTiles = true;
+				nextCounter = board.getPosition(row, column + 1);
+				
+				if ((counter == nextCounter) && (counter != Counter.EMPTY)) {
+					tilesCounter++;
+					if (tilesCounter == 4) {
+						isFormed = true;
+						winner = counter;
 					}
 				}
-				else
-				{
-					tilesCounter = 0;
-				}
+				else {
+					tilesCounter = 1;
+					counter = board.getPosition(row, column + 1); // next Cell color
+				}		
 				
-				column++;
-			}		
-			row++;			
+				column++; // Go to right
+			}			
+			row--; // Decrease the row (from bottom to top)
 		}
-		return formedTiles;
+		return isFormed;
 	}
 
 	/***
@@ -188,41 +186,46 @@ public class Game {
 	 * Comprueba si hay en alguna columna se ha formado una tile con  
 	 * la dimension de la constante para ganar
 	 */
+
+	// He vuelto a escribir esta funcion desde 0. Parece que funciona
+	// La logica que sigue es comparar la celda actual con la siguiente
 	
 	public boolean checkVertical() {
-		boolean formedTiles = false;
-		int row = 1, column = 1, tilesCounter;
-		Counter counter; 
+		boolean isFormed = false;
+		int tilesCounter, row, column;
+		Counter counter, nextCounter;
 		
-		while((!formedTiles) && (column <= board.getWidth())) 
+		column = 1;
+		
+		while((column <= Resources.BOARD_DIMX) && (!isFormed)) 
 		{
-			row = 1; // Reset the Row to 0	
-			counter = board.getPosition(row, column);
-			tilesCounter = 0;//estaba en uno y siempre contaba uno menos
+			tilesCounter = 1; // Reset counter
+			row = board.getHeight(); // Start at bottom
+			counter = board.getPosition(row, column); // Color of first cell on each iteration
 			
-			while((!formedTiles) && (row <= board.getHeight())) 
+			while((row > 1) && (!isFormed))  
 			{
-				counter = board.getPosition(row, column);
-				if ((board.getPosition(row, column) == counter) && board.getPosition(row, column) != Counter.EMPTY) 
-				{
-					tilesCounter++;					
-					if (tilesCounter == Resources.TILES_TO_WIN) {
-						formedTiles = true;
-						this.winner = counter;
+				nextCounter = board.getPosition(row - 1, column); // take the color of row before
+				
+				if ((counter == nextCounter) && (counter != Counter.EMPTY)) {
+					tilesCounter++;
+					if (tilesCounter == 4) {
+						isFormed = true;
+						winner = counter;
 					}
 				}
-				else
-				{
-					tilesCounter = 0; 
-				}
+				else {
+					tilesCounter = 1;
+					counter = board.getPosition(row - 1, column); // next Cell color
+				}		
 				
-				row++;
-			}		
-			column++;			
+				row--;
+			}			
+			column++;
 		}
-		return formedTiles;
+		return isFormed;
 	}
-
+	
 	/***
 	 * Check Diagonal
 	 * Primero empieza desde la esquina superior derecha y 

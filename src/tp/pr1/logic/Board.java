@@ -51,16 +51,27 @@ public class Board {
 		String line = "";
 		for (int i = 0; i <= width; i++) {
 			if (i == 0) {
-				line += "   -";
+				line += "    ";
 			}
 			if ((i > 0) && (i <= width)) {
-				line += i;
+				line += " " + i + " ";
 			}
 			if (i == width) {
-				line += "- ";
+				line += "  ";
 			}
 		}
 		line += " \n";
+
+		
+		for (int i = 0; i < width; i++) {
+			if (i == 0) {
+				line += "  ----";
+			}
+			line += "--";
+			if (i == width - 1) {
+				line += "----" + "\n";
+			}
+		}
 		
 		for (int i = 1; i <= height; i++) 
 		{
@@ -70,15 +81,15 @@ public class Board {
 			{	
 				if (getPosition(i, j) == Counter.EMPTY) 
 				{
-					line += "-";
+					line += " - ";
 				}
 				else if (getPosition(i, j) == Counter.BLACK)
 				{
-					line +=  "O";
+					line +=  " B "; // cambiar por O. Estoy probando
 				}
 				else if (getPosition(i, j) == Counter.WHITE)
 				{
-					line += "X";
+					line += " W "; // Cambiar por X cuando se termine de debug
 				}			 
 			}
 			line += " |";
@@ -87,11 +98,11 @@ public class Board {
 		
 		for (int i = 0; i < width; i++) {
 			if (i == 0) {
-				line += "  --";
+				line += "  ----";
 			}
-			line += "-";
+			line += "--";
 			if (i == width - 1) {
-				line += "-- ";
+				line += "----";
 			}
 		}
 		

@@ -7,7 +7,7 @@ import tp.pr1.logic.Counter;
 public class Resources {
 	
 	public static final int TILES_TO_WIN = 4;
-	public static final int BOARD_DIMX = 5, BOARD_DIMY = 5;
+	public static final int BOARD_DIMX = 4, BOARD_DIMY = 4;
 
 	public static int freeRowPosition(int col, Board board) {
 		int row = -1;
@@ -52,12 +52,13 @@ public class Resources {
 		
 		Scanner in = new Scanner(System.in);
 		
-		while(!valid) {
-			System.out.println("Menu");
-			System.out.println("0. Make a move");
-			System.out.println("1. Undo");
-			System.out.println("2. Restart"); 
-			System.out.println("3. Exist"); 
+		while(!valid) { 
+			System.out.println("0. Make a move   1. Undo");
+			System.out.println("2. Restart       3. Exit");
+//			System.out.println("1. Undo");
+//			System.out.println("2. Restart"); 
+//			System.out.println("3. Exist"); 
+			System.out.println(" ");
 			
 			option = in.nextInt();
 			
