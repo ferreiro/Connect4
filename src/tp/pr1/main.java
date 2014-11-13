@@ -21,10 +21,8 @@ public class main {
 	}	
 }
 
-
 //		UNIT TESTS
 //		SOME TESTS ON THE CODE
-
 
 /*		Board board = new Board(10, 10);
 		System.out.println(board.getHeight());
@@ -41,7 +39,6 @@ public class main {
 
 		board.printBoard();
 */
-		
 			
 //		counter = game.getTurn();
 //		System.out.println(counter);

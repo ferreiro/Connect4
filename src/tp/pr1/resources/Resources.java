@@ -7,7 +7,7 @@ import tp.pr1.logic.Counter;
 public class Resources {
 	
 	public static final int TILES_TO_WIN = 4;
-	public static final int BOARD_DIMX = 4, BOARD_DIMY = 4;
+	public static final int BOARD_DIMX = 5, BOARD_DIMY = 5;
 
 	public static int freeRowPosition(int col, Board board) {
 		int row = -1;

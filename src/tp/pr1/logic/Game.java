@@ -159,7 +159,7 @@ public class Game {
 				
 				if ((counter == nextCounter) && (counter != Counter.EMPTY)) {
 					tilesCounter++;
-					if (tilesCounter == 4) {
+					if (tilesCounter == Resources.TILES_TO_WIN) {
 						isFormed = true;
 						this.winner = counter;
 					}
@@ -204,7 +204,7 @@ public class Game {
 				
 				if ((counter == nextCounter) && (counter != Counter.EMPTY)) {
 					tilesCounter++;
-					if (tilesCounter == 4) {
+					if (tilesCounter == Resources.TILES_TO_WIN) {
 						isFormed = true;
 						this.winner = counter;
 					}
@@ -231,73 +231,81 @@ public class Game {
 	 */
 	
 	public boolean checkDiagonal1() {
-		boolean formedTiles = false;
-		int row = 0, column = 0, tilesCounter, auxColum, auxRow;
-		Counter counter; 
+		boolean isFormed = false;
+		int row, column, tilesCounter, auxColumn, auxRow, numIterations;
+		Counter color, nextColor;
 		
-		// Checks the Middle Left
+		row = 1; // Always start in the firt row
+		column = board.getWidth(); // Always start in the last column
+		color = board.getPosition(row, column);
 		
-		column = board.getWidth();
+		// starting top right position
+		// Checks until the first diagonal
 		
-		while((!formedTiles) && (column > 0)) 
-		{
-			row = 1; // Reset the Row to 1	
-			counter = board.getPosition(row, column);
-			tilesCounter = 0;//estaba en uno y siempre contaba uno menos
-			auxColum = column; // copy the value of colum
+		while ((column >= 1) && !(isFormed)) {
+			row = 1;
+			auxColumn = column;
+			tilesCounter = 1;
+			numIterations = board.getHeight() - column;
 			
-			while((!formedTiles) && (row <= column)) 
-			{
-				if((board.getPosition(row, auxColum) == counter) && board.getPosition(row, column) != Counter.EMPTY) {
+			while ((row <= numIterations) && !(isFormed)) {
+				color = board.getPosition(row, auxColumn);
+				nextColor = board.getPosition(row + 1, auxColumn + 1);
+				
+				if ((color == nextColor) && (color != Counter.EMPTY)) {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
-						formedTiles = true;
-						this.winner = counter;
+						isFormed = true;
+						winner = color;
 					}
 				}
-				else {
-					tilesCounter = 0;
-				}
-				
+				else
+				{
+					tilesCounter = 1;
+				}	
 				row++;
-				auxColum--;
-			}
+				auxColumn++;
+			}			
 			column--;
 		}
 		
-		if(!formedTiles) {
-			// Checks the Middle Right
-			row = 2;
+		// starting at (height, 1)
+		// Checks diagonals to bottom
+
+		column = 1; // Always start in the first column
+		row = board.getHeight(); // Always start in the firt row
+		color = board.getPosition(row, column);
+		
+		while ((row >= 1) && !(isFormed)) {
+			column = 1;
+			auxRow = row;
+			tilesCounter = 1;
+			numIterations = board.getWidth() - row;
 			
-			while((!formedTiles) && (row <= board.getHeight())) 
-			{
-				column = board.getWidth(); // Reset the Row to 0	
-				counter = board.getPosition(column, row);
-				tilesCounter = 0;//estaba en uno y siempre contaba uno menos
-				auxRow = row; // copy the value of row
+			while ((column <= numIterations) && !(isFormed)) {
+				color = board.getPosition(auxRow, column);
+				nextColor = board.getPosition(auxRow + 1, column + 1);
 				
-				while((!formedTiles) && (column >= row)) 
-				{
-					if((board.getPosition(column, auxRow) == counter) && board.getPosition(row, column) != Counter.EMPTY) {
-						tilesCounter++;
-						if (tilesCounter == Resources.TILES_TO_WIN) {
-							formedTiles = true;
-							this.winner = counter;
-						}
+				if ((color == nextColor) && (color != Counter.EMPTY)) {
+					tilesCounter++;
+					if (tilesCounter == Resources.TILES_TO_WIN) {
+						isFormed = true;
+						winner = color;
 					}
-					else {
-						tilesCounter = 0;
-					}
-
-					column--;
-					auxRow++;
 				}
-				row++;
-			}
-		}
-		return formedTiles;
-	}
-
+				else
+				{
+					tilesCounter = 1;
+				}	
+				column++;
+				auxRow++;
+			}			
+			row--;
+		}			
+		
+		return isFormed;
+	}	
+	
 	/***
 	 * Check Diagonal 2
 	 * Primero empieza desde la esquina superior izquierda y 
@@ -308,75 +316,86 @@ public class Game {
 	 */
 	
 	public boolean checkDiagonal2() {
-		boolean formedTiles = false;
-		int row = 0, column = 0, tilesCounter, auxColum, auxRow;
-		Counter counter; 
+		boolean isFormed = false;
+		int row, column, tilesCounter, auxColumn, auxRow, numIterations;
+		Counter color, nextColor;
 		
-		// Checks the Middle Left
+		// starting bottom left position
+		// Checks diagonals until the first cell (1,1)
+
+		row = board.getHeight(); // Always start in the last row
+		column = 1; // Always start in the first column
+		color = board.getPosition(row, column);
 		
-		column = 1;
-		
-		while((!formedTiles) && (column <= board.getWidth())) 
-		{
-			row = 1; // Reset the Row to 1	
-			counter = board.getPosition(row, column);
-			tilesCounter = 0;//estaba en uno y siempre contaba uno menos
-			auxColum = column; // copy the value of colum
+		while ((row >= 1) && !(isFormed)) {
+			column = 1;
+			auxRow = row;
+			tilesCounter = 1;
+			numIterations = row - 1;
 			
-			while((!formedTiles) && (row <= (board.getHeight() + 1) - column))			//(row < (board.getHeight() - 1) - column)) 
-			{
-				if((board.getPosition(row, auxColum) == counter) && board.getPosition(row, column) != Counter.EMPTY) {
+			while ((column <= numIterations) && !(isFormed)) {
+				color = board.getPosition(auxRow, column);
+				nextColor = board.getPosition(auxRow - 1, column + 1);
+				
+				if ((color == nextColor) && (color != Counter.EMPTY)) {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
-						formedTiles = true;
-						this.winner = counter;
+						isFormed = true;
+						winner = color;
 					}
 				}
-				else {
-					tilesCounter = 0;
+				else
+				{
+					tilesCounter = 1;
 				}	
-				row++;
-				auxColum++;
-			}
-			column++;
+				auxRow--;
+				column++;
+			}			
+			row--;
 		}
 		
-		if(!formedTiles) {
-			// Checks the Middle Right
-			row = 2;
+		// starting at (height, height) ex: (5,5)
+		// Checks from bottom to top right
+ 
+		row = board.getHeight(); // Always start in the last row
+		column = board.getHeight(); // Always start in the first column
+		color = board.getPosition(row, column);
+		
+		while ((column >= 1) && !(isFormed)) {
+			row = board.getHeight();
+			auxColumn = column;
+			tilesCounter = 1;
+			numIterations = board.getWidth() - column; 
 			
-			while((!formedTiles) && (row <= board.getHeight())) 
-			{
-				column = board.getWidth(); // Reset the Row to 0	
-				counter = board.getPosition(column, row);
-				tilesCounter = 0;//estaba en uno y siempre contaba uno menos
-				auxRow = row; // copy the value of row
+			while ((numIterations > 0) && !(isFormed)) {
+				color = board.getPosition(row, auxColumn);
+				nextColor = board.getPosition(row - 1, auxColumn + 1);
 				
-				while((!formedTiles) && (column <= (board.getWidth() + 1) - row)) //(column <= (board.getWidth() - 1) - row)) 
-				{
-					if((board.getPosition(column, auxRow) == counter) && board.getPosition(row, column) != Counter.EMPTY) {
-						tilesCounter++;
-						if (tilesCounter == Resources.TILES_TO_WIN) {
-							formedTiles = true;
-							this.winner = counter;
-						}
+				if ((color == nextColor) && (color != Counter.EMPTY)) {
+					tilesCounter++;
+					if (tilesCounter == Resources.TILES_TO_WIN) {
+						isFormed = true;
+						winner = color;
 					}
-					else {
-						tilesCounter = 0;
-					}
-					column++;
-					auxRow++;
 				}
-				row++;
-			}
-		}
-		return formedTiles;
-	}  
+				else
+				{
+					tilesCounter = 1;
+				}	
+				row--;
+				auxColumn++;
+				numIterations--;
+			}			
+			column--;
+		}			
+		
+		return isFormed;
+	}	
 	
 	// Show the winner.
 	public Counter getWinner()//nos falta llamar a getwinner en algun lugar
 	{
-		return turn;
+		return winner;
 	}
 
 	public boolean getFinished() {

@@ -68,11 +68,14 @@ public class Controller {
 				break;
 				
 			}
-			 
+			
+			game.printBoard();
+			
 			// If it's finished. Then exit the loop.
 			
 			if (game.getFinished()) 
 			{
+				
 				Counter counterWinner = game.getWinner();
 				exit = true;
 				
@@ -83,11 +86,7 @@ public class Controller {
 				{
 					System.out.println("You finish the game");
 				}					
-			} 
-			else 
-			{
-				game.printBoard();
-			}
+			}  
 		} while(!exit);
 		
 	}
