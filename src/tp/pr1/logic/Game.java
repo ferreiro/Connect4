@@ -280,9 +280,9 @@ public class Game {
 			column = 1;
 			auxRow = row;
 			tilesCounter = 1;
-			numIterations = board.getWidth() - row;
+			numIterations = board.getHeight() - row + 1;//antes era width y sin el +1
 			
-			while ((column <= numIterations) && !(isFormed)) {
+			while ((column < numIterations) && !(isFormed)) {//<=
 				color = board.getPosition(auxRow, column);
 				nextColor = board.getPosition(auxRow + 1, column + 1);
 				
@@ -358,16 +358,17 @@ public class Game {
 		// Checks from bottom to top right
  
 		row = board.getHeight(); // Always start in the last row
-		column = board.getHeight(); // Always start in the first column
+		column = board.getWidth(); // Always start in the first column; pero aqui ponia getHeight no Width
 		color = board.getPosition(row, column);
+		int counter = 0;
 		
 		while ((column >= 1) && !(isFormed)) {
 			row = board.getHeight();
 			auxColumn = column;
 			tilesCounter = 1;
-			numIterations = board.getWidth() - column; 
-			
-			while ((numIterations > 0) && !(isFormed)) {
+			numIterations = board.getWidth() - column + 1;
+			counter = 1;
+			while ((counter < numIterations) && !(isFormed)) {
 				color = board.getPosition(row, auxColumn);
 				nextColor = board.getPosition(row - 1, auxColumn + 1);
 				
@@ -385,6 +386,7 @@ public class Game {
 				row--;
 				auxColumn++;
 				numIterations--;
+				counter++;
 			}			
 			column--;
 		}			
