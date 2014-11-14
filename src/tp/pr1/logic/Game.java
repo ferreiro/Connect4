@@ -79,6 +79,7 @@ public class Game {
 
 	public void reset() {
 		numUndo = 0;
+		winner = Counter.EMPTY;
 		turn = Counter.WHITE;
 		board.emptyCells();		
 	}

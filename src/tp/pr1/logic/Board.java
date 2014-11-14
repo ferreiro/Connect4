@@ -135,11 +135,11 @@ public class Board {
 				}
 				else if (getPosition(i, j) == Counter.BLACK)
 				{
-					line +=  " B "; // cambiar por O. Estoy probando
+					line +=  " O "; // cambiar por O. Estoy probando
 				}
 				else if (getPosition(i, j) == Counter.WHITE)
 				{
-					line += " W "; // Cambiar por X cuando se termine de debug
+					line += " X "; // Cambiar por X cuando se termine de debug
 				}			 
 			}
 			line += " |";
