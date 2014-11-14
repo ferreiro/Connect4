@@ -20,9 +20,8 @@ public class Game {
 	}
 	
 	public void test() {
-		board.testDiagonal1_Bottom();
+		board.diago1();
 	}
-	
 	
 	public boolean executeMove(Counter colour, int column)
 	{
@@ -232,6 +231,92 @@ public class Game {
 	 * 
 	 */
 	
+//	public boolean checkDiagonal1() {
+//		boolean isFormed = false;
+//		int y, x, tilesCounter, aux_Y, aux_X, numIterations, counter;
+//		Counter color, nextColor;
+//		
+//		// Starting at top right (y = 1, x = 7)
+//		
+//		y = 1;
+//		x = board.getWidth();
+//		
+//		while ((x >= 1) && (!isFormed)) {
+//			y = 1;
+//			aux_X = x;
+//			counter = 1;
+//			tilesCounter = 1;	
+//			numIterations = board.getWidth() - x;
+//			
+//			while ((counter <= numIterations) && (!isFormed)) {
+//				color = board.getPosition(aux_X, y);
+//				nextColor = board.getPosition(aux_X + 1, y + 1);
+//
+//				if ((color == nextColor) && (color != Counter.EMPTY)) 
+//				{
+//					tilesCounter++;
+//					
+//					if (tilesCounter == Resources.TILES_TO_WIN) {
+//						isFormed = true;
+//						finished = true;
+//						winner = color;
+//					}
+//				}
+//				else
+//				{
+//					tilesCounter = 1;
+//				}	
+//				counter++;
+//				aux_X++;
+//				y++;
+//			}	
+//			x--;
+//		}
+//		
+//		if (!isFormed) 
+//		{
+//			// Starting at top right (y = 1, x = 7)
+//			
+//			y = 2;
+//			x = 1;
+//			
+//			while ((y <= board.getHeight()) && (!isFormed)) {
+//				x = 1;
+//				aux_Y = y;
+//				counter = 1;
+//				tilesCounter = 1;
+//				numIterations = board.getHeight() - y;
+//				
+//				while ((counter <= numIterations) && (!isFormed)) {
+//					color = board.getPosition(x, aux_Y);
+//					nextColor = board.getPosition(x + 1, aux_Y + 1);
+//					
+//					if ((color == nextColor) && (color != Counter.EMPTY)) 
+//					{
+//						tilesCounter++;
+//						
+//						if (tilesCounter == Resources.TILES_TO_WIN) {
+//							isFormed = true;
+//							finished = true;
+//							winner = color;
+//						}
+//					}
+//					else
+//					{
+//						tilesCounter = 1;
+//					}	
+//					counter++;
+//					aux_Y++;
+//					x++;					
+//				}
+//				y++;
+//			}
+//		}
+//		
+//		return isFormed;
+//	}
+//	
+	
 	public boolean checkDiagonal1() {
 		boolean isFormed = false;
 		int y, x, tilesCounter, aux_Y, aux_X, numIterations;
@@ -240,15 +325,14 @@ public class Game {
 		// starting bottom left position
 		// Checks diagonals until the first cell (1,1)
 
-		y = board.getHeight(); // Always start in the last row
 		x = 1; // Always start in the first column
-		color = board.getPosition(y, x);
+		y = board.getHeight(); // Always start in the last row 
 		
 		while ((y >= 1) && !(isFormed)) {
 			x = 1;
 			aux_Y = y;
 			tilesCounter = 1;
-			numIterations = y - 1;
+			numIterations = y - x;
 			
 			while ((x <= numIterations) && !(isFormed)) {
 				color = board.getPosition(x, aux_Y);
@@ -272,46 +356,49 @@ public class Game {
 			y--;
 		}
 		
-		// starting at (height, height) ex: (5,5)
-		// Checks from bottom to top right
- 
-		y = board.getHeight(); // Always start in the last row
-		x = board.getWidth(); // Always start in the first column; pero aqui ponia getHeight no Width
-		color = board.getPosition(x, y);
-		int counter = 0;
-		
-		while ((x >= 1) && !(isFormed)) {
-			y = board.getHeight();
-			aux_X = x;
-			tilesCounter = 1;
-			numIterations = board.getWidth() - x + 1;
-			counter = 1;
-			while ((counter < numIterations) && !(isFormed)) {
-				color = board.getPosition(aux_X, y);
-				nextColor = board.getPosition(aux_X + 1, y - 1);
-				
-				if ((color == nextColor) && (color != Counter.EMPTY)) {
-					tilesCounter++;
-					if (tilesCounter == Resources.TILES_TO_WIN) {
-						isFormed = true;
-						finished = true;
-						winner = color;
+		if (!isFormed) {
+			// starting at (height, height) ex: (5,5)
+			// Checks from bottom to top right
+	 
+			y = board.getHeight(); // Always start in the last row
+			x = board.getWidth(); // Always start in the first column; pero aqui ponia getHeight no Width
+			color = board.getPosition(x, y);
+			int counter = 0;
+			
+			while ((x >= 1) && !(isFormed)) {
+				y = board.getHeight();
+				aux_X = x;
+				tilesCounter = 1;
+				numIterations = board.getWidth() - x + 1;
+				counter = 1;
+				while ((counter < numIterations) && !(isFormed)) {
+					color = board.getPosition(aux_X, y);
+					nextColor = board.getPosition(aux_X + 1, y - 1);
+					
+					if ((color == nextColor) && (color != Counter.EMPTY)) {
+						tilesCounter++;
+						if (tilesCounter == Resources.TILES_TO_WIN) {
+							isFormed = true;
+							finished = true;
+							winner = color;
+						}
 					}
-				}
-				else
-				{
-					tilesCounter = 1;
-				}	
-				y--;
-				aux_X++;
-				numIterations--;
-				counter++;
+					else
+					{
+						tilesCounter = 1;
+					}	
+					y--;
+					aux_X++;
+					numIterations--;
+					counter++;
+				}			
+				x--;
 			}			
-			x--;
-		}			
+		}
 		
 		return isFormed;
 	}	
+	
 	
 	/***
 	 * Check Diagonal 2
@@ -363,40 +450,42 @@ public class Game {
 			x--;
 		}
 		
-		// starting at (height, 1)
-		// Checks diagonals to bottom
+		if (!isFormed) {
+			// starting at (height, 1)
+			// Checks diagonals to bottom
 
-		x = 1; // Always start in the first column
-		y = board.getHeight(); // Always start in the firt row
-		color = board.getPosition(x, y);
-		
-		while ((y >= 1) && !(isFormed)) {
-			x = 1;
-			aux_Y = y;
-			tilesCounter = 1;
-			numIterations = board.getHeight() - y + 1;//antes era width y sin el +1
+			x = 1; // Always start in the first column
+			y = board.getHeight(); // Always start in the firt row
+			color = board.getPosition(x, y);
 			
-			while ((x < numIterations) && !(isFormed)) {//<=
-				color = board.getPosition(x, aux_Y);
-				nextColor = board.getPosition(x + 1, aux_Y + 1);
+			while ((y >= 1) && !(isFormed)) {
+				x = 1;
+				aux_Y = y;
+				tilesCounter = 1;
+				numIterations = board.getHeight() - y + 1;//antes era width y sin el +1
 				
-				if ((color == nextColor) && (color != Counter.EMPTY)) {
-					tilesCounter++;
-					if (tilesCounter == Resources.TILES_TO_WIN) {
-						isFormed = true;
-						finished = true;
-						winner = color;
+				while ((x < numIterations) && !(isFormed)) {//<=
+					color = board.getPosition(x, aux_Y);
+					nextColor = board.getPosition(x + 1, aux_Y + 1);
+					
+					if ((color == nextColor) && (color != Counter.EMPTY)) {
+						tilesCounter++;
+						if (tilesCounter == Resources.TILES_TO_WIN) {
+							isFormed = true;
+							finished = true;
+							winner = color;
+						}
 					}
-				}
-				else
-				{
-					tilesCounter = 1;
-				}	
-				x++;
-				aux_Y++;
+					else
+					{
+						tilesCounter = 1;
+					}	
+					x++;
+					aux_Y++;
+				}			
+				y--;
 			}			
-			y--;
-		}			
+		}
 		
 		return isFormed;
 	}	

@@ -34,21 +34,37 @@ public class Board {
 		}
 	}
 
-	public void testDiagonal1_top() {
+	public void diago1() {
 		Counter counter = Counter.BLACK;
 		board[4][0] = counter; 
 		board[3][1] = counter;
 		board[2][2] = counter;
 		board[1][3] = counter;
 	}
-	public void testDiagonal1_Bottom() {
+	public void diago2() {
+		Counter counter = Counter.BLACK;
+		board[3][0] = counter; 
+		board[2][1] = counter;
+		board[1][2] = counter;
+		board[0][3] = counter;
+	}
+	public void diago3() {
 		Counter counter = Counter.BLACK;
 		board[4][1] = counter; 
 		board[3][2] = counter;
 		board[2][3] = counter;
 		board[1][4] = counter;
 	}
- 	
+	public void diago4() {
+		Counter counter = Counter.BLACK; 
+
+		setPosition(4, 6, counter);
+		setPosition(5, 5, counter);
+		setPosition(6, 4, counter);
+		setPosition(7, 3, counter);
+
+	}
+ 
 //	public void testDiagonal2_top() {
 //		Counter counter = Counter.BLACK;
 //		board[0][0] = counter; 
