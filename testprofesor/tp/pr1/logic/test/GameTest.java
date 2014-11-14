@@ -22,7 +22,7 @@ public class GameTest {
 	public void testCtor() {
 		assertFalse("A game which has just started shouldn't have already finished", game.isFinished());
 		assertEquals("White always starts.", Counter.WHITE, game.getTurn());
-		assertEquals("The board dimensions should be fixed as 7x6", 6, game.getBoard().getWidth());
+		assertEquals("The board dimensions should be fixed as 7x6", 7, game.getBoard().getWidth());
 		assertEquals("The board dimensions should be fixed as 7x6", 6, game.getBoard().getHeight());
 		assertFalse("At the start of the game, there is nothing to undo.", game.undo());
 	}
@@ -32,7 +32,7 @@ public class GameTest {
 		assertTrue(game.executeMove(Counter.WHITE, 1));
 		assertEquals("If the first move of a game is in column 1 then after making it, board position (1, 6) should contain a white counter",
 				Counter.WHITE,
-				game.getBoard().getPosition(6,  1));
+				game.getBoard().getPosition(1,  6));
 		// added condition to handle a 1x1 board!!!
 		assertFalse("After only one move the game should not have finished (on a non-trivial board).", ( game.isFinished() && (game.getBoard().getWidth() > 1 || game.getBoard().getHeight() > 1)) );
 		assertEquals("After white moves it should be black's turn.", Counter.BLACK, game.getTurn());
@@ -74,18 +74,16 @@ public class GameTest {
 				board == game.getBoard());
 		assertEquals("After making a move in column 3, position (3, 6) should contain a white counter",
 				Counter.WHITE,
-				board.getPosition(6,  3));
+				board.getPosition(3,  6));
 	}
 	
 	
 	@Test
 	public void partidaEnTablas() {
-		// Cambiar x por 7
-		for (int x = 1; x <= 6; ++x) {
+		for (int x = 1; x <= 7; ++x) {
 			if (x == 4) continue;
 			for (int i = 0; i < 6; ++i) {
-				// If x == 7
-				if ((x == 6) && (i == 5)) continue;
+				if ((x == 7) && (i == 5)) continue;
 				assertTrue(game.executeMove(game.getTurn(), x));
 			}
 		}
@@ -94,8 +92,7 @@ public class GameTest {
 			assertTrue(game.executeMove(game.getTurn(), 4));
 		}
 		
-		// cambiar el segundo 6
-		assertTrue(game.executeMove(game.getTurn(), 6));
+		assertTrue(game.executeMove(game.getTurn(), 7));
 
 		assertTrue("If the board is full, the game should be finished.", game.isFinished());
 		assertEquals("If the board is full, the game should have finished in a draw, i.e. there should be no winner.", Counter.EMPTY, game.getWinner());

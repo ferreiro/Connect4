@@ -7,21 +7,21 @@ import tp.pr1.logic.Counter;
 public class Resources {
 	
 	public static final int TILES_TO_WIN = 4;
-	public static final int BOARD_DIMX = 6, BOARD_DIMY = 6;
+	public static final int BOARD_DIMX = 7, BOARD_DIMY = 6;
 
 	public static int freeRowPosition(int col, Board board) {
 		int row = -1;
-		int i =  board.getHeight();
+		int y =  board.getHeight();
 		boolean empty = false;
 	
-		while ((!empty) && (i >= 1)) {
-			if (board.getPosition(i, col) == Counter.EMPTY) {
+		while ((!empty) && (y >= 1)) {
+			if (board.getPosition(col,y) == Counter.EMPTY) {
 				empty = true;
-				row = i;
+				row = y;
 			}
 			else
 			{
-				i--;
+				y--;
 			}			
 		} 
 		return row;
@@ -32,16 +32,16 @@ public class Resources {
 	
 	public static int occupiedRowPosition(Board board, int col) {
 		int height = board.getHeight();
-		int row = height, i = 1;
+		int row = height, y = 1;
 		boolean occupied = false;
 		
-		while (!occupied && i <= height){
-			if (board.getPosition(i, col) != Counter.EMPTY) 
+		while (!occupied && y <= height){
+			if (board.getPosition(col, y) != Counter.EMPTY) 
 			{
 				occupied = true;
-				row = i;
+				row = y;
 			}
-			i++;
+			y++;
 		}
 		return row;
 	}
@@ -55,9 +55,6 @@ public class Resources {
 		while(!valid) { 
 			System.out.println("0. Make a move   1. Undo");
 			System.out.println("2. Restart       3. Exit");
-//			System.out.println("1. Undo");
-//			System.out.println("2. Restart"); 
-//			System.out.println("3. Exist"); 
 			System.out.println(" ");
 			
 			option = in.nextInt();

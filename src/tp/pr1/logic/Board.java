@@ -1,16 +1,12 @@
 package tp.pr1.logic;
 
-import java.util.Scanner;
-
-import tp.pr1.control.Controller;
-
 public class Board {
 	private Counter [][] board;
 	private int width;
 	private int height;
 	
 	public Board(int tx, int ty) {
-		width = tx; // 
+		width = tx; // Row
 		height = ty;  // column
 		if ((tx < 1) || (ty < 1))
 		{
@@ -24,44 +20,49 @@ public class Board {
 
 	/// FUNCTIONS TO TEST
 
-	public void todashorizontal() {
+	public void todasColor() {
 		for (int i = 0; i < height; i++) {
 			for(int j = 0; j < width; j++) {
-				board[i][j] = Counter.WHITE;
+				if (i == 0 && j == 0) {
+					
+				}
+				else
+				{
+					board[i][j] = Counter.WHITE;
+				}				
 			}
 		}
 	}
 
 	public void testDiagonal1_top() {
 		Counter counter = Counter.BLACK;
-		board[0][0] = counter; 
-		board[1][1] = counter;
-		board[2][2] = counter;
-		board[3][3] = counter;
-	}
-	public void testDiagonal1_Bottom() {
-		Counter counter = Counter.BLACK;
-		board[1][0] = counter; 
-		board[2][1] = counter;
-		board[3][2] = counter;
-		board[4][3] = counter;
-	}
-	public void testDiagonal2_top() {
-		Counter counter = Counter.BLACK;
 		board[4][0] = counter; 
 		board[3][1] = counter;
 		board[2][2] = counter;
 		board[1][3] = counter;
 	}
-	public void testDiagonal2_Bottom() {
+	public void testDiagonal1_Bottom() {
 		Counter counter = Counter.BLACK;
 		board[4][1] = counter; 
 		board[3][2] = counter;
 		board[2][3] = counter;
 		board[1][4] = counter;
 	}
-	// 	END FUNCTIONS TO TEST
-	
+ 	
+//	public void testDiagonal2_top() {
+//		Counter counter = Counter.BLACK;
+//		board[0][0] = counter; 
+//		board[1][1] = counter;
+//		board[2][2] = counter;
+//		board[3][3] = counter;
+//	}
+//	public void testDiagonal2_Bottom() {
+//		Counter counter = Counter.BLACK;
+//		board[1][0] = counter; 
+//		board[2][1] = counter;
+//		board[3][2] = counter;
+//		board[4][3] = counter;
+//	}
 	
 	public Counter [][] getBoard() {
 		return board;
@@ -77,22 +78,22 @@ public class Board {
 	
 	public Counter getPosition(int x, int y) {
 		Counter color = Counter.EMPTY;
-		if ((x >= 1 && x <= width) || (y >= 1 && y <= width)) {
-			color = board[x - 1][y - 1];
+		if ((x >= 1 && x <= width) || (y >= 1 && y <= height)) {
+			color = board[y - 1][x - 1];
 		}
 		return color;		
 	}
 	
 	public void setPosition(int x, int y, Counter colour) { 
 		// if ((x >= 1 && x <= width) || (y >= 1 && y <= width)) {
-			board[x - 1][y - 1] = colour;
+			board[y - 1][x - 1] = colour;
 		//}		
 	}
 	 
 	public void emptyCells() {
-		for (int row = 0; row < height; row++) {
-			for (int colum = 0; colum < width; colum++) {
-				board[row][colum] = Counter.EMPTY;
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				board[y][x] = Counter.EMPTY;
 			}
 		}
 	}
@@ -132,11 +133,11 @@ public class Board {
 		 *   2  |
 		 */
 		
-		for (int i = 1; i <= height; i++) 
+		for (int y = 1; y <= height; y++) 
 		{
-			line +=i;
+			line +=y;
 			
-			if (i < 10) {
+			if (y < 10) {
 				line += "  | "; // Add extra space for 1 digit numbers
 			}		
 			else {
@@ -144,17 +145,17 @@ public class Board {
 			}
 			
 
-			for (int j = 1; j <= width; j++) 
+			for (int x = 1; x <= width; x++) 
 			{	
-				if (getPosition(i, j) == Counter.EMPTY) 
+				if (getPosition(x, y) == Counter.EMPTY) 
 				{
 					line += " - ";
 				}
-				else if (getPosition(i, j) == Counter.BLACK)
+				else if (getPosition(x, y) == Counter.BLACK)
 				{
 					line +=  " B "; // cambiar por O. Estoy probando
 				}
-				else if (getPosition(i, j) == Counter.WHITE)
+				else if (getPosition(x, y) == Counter.WHITE)
 				{
 					line += " W "; // Cambiar por X cuando se termine de debug
 				}			 

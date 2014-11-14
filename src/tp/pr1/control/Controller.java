@@ -23,68 +23,72 @@ public class Controller {
 		
 		// game.test();
 		game.printBoard();
+		game.test();
 		
-		do {
-			option = Resources.menu();
-			
-			switch(option) {
-			case 0: 
-				// Make a move 
+		if (!game.isFinished()) {
+			do {
+				option = Resources.menu();
 				
-				do 
-				{
-					System.out.println("Colum: ");
-					col = in.nextInt();
-					valid = game.executeMove(game.getTurn(), col);
+				switch(option) {
+				case 0: 
+					// Make a move 
 					
-					if (!valid) {
-						System.out.println("Movement not valid!");
+					do 
+					{
+						System.out.println("Colum: ");
+						col = in.nextInt();
+						valid = game.executeMove(game.getTurn(), col);
+						
+						if (!valid) {
+							System.out.println("Movement not valid!");
+						}
+						
+					} while(!valid);
+					
+					break;
+				case 1:
+					// Undo 
+					undo = false;
+					undo = game.undo();
+					
+					if (!undo) {
+						System.out.println("Pues va a ser que no...");
 					}
+	
+					break;
+				case 2:
+					// Restart 
+					game.reset();
 					
-				} while(!valid);
-				
-				break;
-			case 1:
-				// Undo 
-				undo = false;
-				undo = game.undo();
-				
-				if (!undo) {
-					System.out.println("Pues va a ser que no...");
+					break;
+				case 3:
+					// Exist
+					exit = true;
+					break;
+					
 				}
-
-				break;
-			case 2:
-				// Restart 
-				game.reset();
 				
-				break;
-			case 3:
-				// Exist
-				exit = true;
-				break;
+				game.printBoard();
 				
-			}
-			
-			game.printBoard();
-			
-			// If it's finished. Then exit the loop.
-			
-			if (game.getFinished()) 
-			{
+				// If it's finished. Then exit the loop.
 				
-				Counter counterWinner = game.getWinner();
-				exit = true;
-				
-				if (counterWinner != Counter.EMPTY) {
-					System.out.println("The winner is " + counterWinner); 
-				}
-				else
+				if (game.getFinished()) 
 				{
-					System.out.println("You finish the game");
-				}					
-			}  
-		} while(!exit);
+					
+					Counter counterWinner = game.getWinner();
+					exit = true;
+					
+					if (counterWinner != Counter.EMPTY) {
+						System.out.println("The winner is " + counterWinner); 
+					}
+					else
+					{
+						System.out.println("You finish the game");
+					}					
+				}  
+			} while(!exit);			
+		}
+		
 		
 	}
 }
