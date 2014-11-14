@@ -32,7 +32,7 @@ public class FourInARowTest {
 				game.isFinished());
 		assertEquals("Winner incorrectly assigned after win by " + colour, colour, game.getWinner());
 		
-		for (int x = 1; x <= 7; ++x) {
+		for (int x = 1; x <= 6; ++x) {
 			assertFalse("It should not be possible to make a move after the game has finished.", game.executeMove(Counter.WHITE, x));
 			assertFalse("It should not be possible to make a move after the game has finished.", game.executeMove(Counter.BLACK, x));
 		}
@@ -53,7 +53,7 @@ public class FourInARowTest {
 		
 		int []posX = new int[4];
 		int []posY = new int[4];
-		for (int x = 1; x <= 7 - 3; ++x) {
+		for (int x = 1; x <= 6 - 3; ++x) {
 			for (int y = 1; y <= 6; ++y) {
 				for (int l = 0; l < 4; ++l) {
 					posX[l] = x + l;
@@ -71,7 +71,7 @@ public class FourInARowTest {
 		
 		int []posX = new int[4];
 		int []posY = new int[4];
-		for (int x = 1; x <= 7; ++x) {
+		for (int x = 1; x <= 6; ++x) {
 			for (int y = 1; y <= 6 - 3; ++y) {
 				for (int l = 0; l < 4; ++l) {
 					posX[l] = x;

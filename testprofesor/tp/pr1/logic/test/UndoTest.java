@@ -30,7 +30,7 @@ public class UndoTest {
 	@Test
 	public void testUndo10Veces() {		
 		for (int i = 1; i <= 3; ++i)
-			for (int x = 1; x <= 7; ++x) {
+			for (int x = 1; x <= 6; ++x) {
 				game.executeMove(game.getTurn(), x);
 				assertFalse(game.isFinished());
 			}

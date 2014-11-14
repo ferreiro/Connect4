@@ -21,6 +21,7 @@ public class Controller {
 		boolean valid = false;
 		boolean undo;
 		
+		// game.test();
 		game.printBoard();
 		
 		do {
@@ -51,11 +52,7 @@ public class Controller {
 				if (!undo) {
 					System.out.println("Pues va a ser que no...");
 				}
-				else
-				{
-					game.changeTurn();
-				}
-				
+
 				break;
 			case 2:
 				// Restart 

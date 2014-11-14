@@ -10,8 +10,8 @@ import tp.pr1.logic.Counter;
 
 public class BoardTest {
 	
-	private static final int TX = 10;
-	private static final int TY = 8;
+	private static final int TX = 6;
+	private static final int TY = 6;
 
 	@Test
 	public void testCtor() {

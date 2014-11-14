@@ -1,5 +1,9 @@
 package tp.pr1.logic;
 
+import java.util.Scanner;
+
+import tp.pr1.control.Controller;
+
 public class Board {
 	private Counter [][] board;
 	private int width;
@@ -17,9 +21,16 @@ public class Board {
 		board = new Counter[height][width];
 		emptyCells(); // Metodo para inicializar el tablero		
 	}
-	
-	
+
 	/// FUNCTIONS TO TEST
+
+	public void todashorizontal() {
+		for (int i = 0; i < height; i++) {
+			for(int j = 0; j < width; j++) {
+				board[i][j] = Counter.WHITE;
+			}
+		}
+	}
 
 	public void testDiagonal1_top() {
 		Counter counter = Counter.BLACK;
@@ -65,11 +76,17 @@ public class Board {
 	}
 	
 	public Counter getPosition(int x, int y) {
-		return board[x - 1][y - 1];
+		Counter color = Counter.EMPTY;
+		if ((x >= 1 && x <= width) || (y >= 1 && y <= width)) {
+			color = board[x - 1][y - 1];
+		}
+		return color;		
 	}
 	
 	public void setPosition(int x, int y, Counter colour) { 
-		board[x - 1][y - 1] = colour;
+		// if ((x >= 1 && x <= width) || (y >= 1 && y <= width)) {
+			board[x - 1][y - 1] = colour;
+		//}		
 	}
 	 
 	public void emptyCells() {
@@ -135,11 +152,11 @@ public class Board {
 				}
 				else if (getPosition(i, j) == Counter.BLACK)
 				{
-					line +=  " O "; // cambiar por O. Estoy probando
+					line +=  " B "; // cambiar por O. Estoy probando
 				}
 				else if (getPosition(i, j) == Counter.WHITE)
 				{
-					line += " X "; // Cambiar por X cuando se termine de debug
+					line += " W "; // Cambiar por X cuando se termine de debug
 				}			 
 			}
 			line += " |";

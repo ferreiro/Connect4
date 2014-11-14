@@ -19,9 +19,14 @@ public class Game {
 		this.undoStack = new int[board.getWidth() * board.getHeight()]; //maximo de deshacer igual al numero max de casillas		
 	}
 	
+	public void test() {
+		board.todashorizontal();
+	}
+	
+	
 	public boolean executeMove(Counter colour, int column)
 	{
-		boolean validMove = true;
+		boolean validMove = false;
 		int firstFreeRow = 1; // creo que aunque pensemos con la logica de una persona esto puede ser 0 porque se inicializa siempre aun asi probamos con 1
 		
 		if ((column >= 1) && (column <= Resources.BOARD_DIMX)) {
@@ -29,11 +34,9 @@ public class Game {
 				
 				firstFreeRow = Resources.freeRowPosition(column, board); 
 
-				if (firstFreeRow == - 1) {
-					validMove = false;
-				}
-				else 
-				{					
+				if (firstFreeRow > - 1) {		
+					validMove = true;
+
 					board.setPosition(firstFreeRow, column, colour); 
 					increaseStack(column);
 					
@@ -44,14 +47,6 @@ public class Game {
 					} 
 				}
 			}
-			else
-			{
-				validMove = false;
-			}
-		}
-		else
-		{
-			validMove = false;
 		}
 		
 		return validMove;
@@ -67,11 +62,14 @@ public class Game {
 		int columnToUndo, rowToUndo; 
 		
 		if (numUndo > 0) {
+			success = true;
+			changeTurn();
+			
 			columnToUndo = undoStack[numUndo - 1];
 			rowToUndo = Resources.occupiedRowPosition(board, columnToUndo); 
+			
 			board.setPosition(rowToUndo, columnToUndo, Counter.EMPTY); 
 			
-			success = true;
 			numUndo--;
 		}	 
 		return success;
@@ -79,7 +77,6 @@ public class Game {
 
 	public void reset() {
 		numUndo = 0;
-		winner = Counter.EMPTY;
 		turn = Counter.WHITE;
 		board.emptyCells();		
 	}
