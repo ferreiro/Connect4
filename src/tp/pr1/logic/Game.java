@@ -326,15 +326,20 @@ public class Game {
 		// Checks diagonals until the first cell (1,1)
 
 		x = 1; // Always start in the first column
-		y = board.getHeight(); // Always start in the last row 
+		y = 1; // Always start in the last row 
+		numIterations = y;
 		
-		while ((y >= 1) && !(isFormed)) {
+		while ((y <= board.getHeight()) && !(isFormed)) {
 			x = 1;
 			aux_Y = y;
 			tilesCounter = 1;
-			numIterations = y - x;
 			
-			while ((x <= numIterations) && !(isFormed)) {
+			if (numIterations > board.getWidth())
+			{
+				numIterations = board.getWidth();
+			}
+			
+			while ((x < numIterations) && !(isFormed)) {
 				color = board.getPosition(x, aux_Y);
 				nextColor = board.getPosition(x + 1, aux_Y - 1);
 				
@@ -353,7 +358,8 @@ public class Game {
 				aux_Y--;
 				x++;
 			}			
-			y--;
+			y++;
+			numIterations++;
 		}
 		
 		if (!isFormed) {
@@ -363,13 +369,17 @@ public class Game {
 			y = board.getHeight(); // Always start in the last row
 			x = board.getWidth(); // Always start in the first column; pero aqui ponia getHeight no Width
 			color = board.getPosition(x, y);
-			int counter = 0;
+			int counter = 1;
 			
 			while ((x > 1) && !(isFormed)) {
 				y = board.getHeight();
 				aux_X = x;
 				tilesCounter = 1;
 				numIterations = board.getWidth() - x + 1;
+				if (numIterations > board.getHeight())
+				{
+					numIterations = board.getHeight();
+				}
 				counter = 1;
 				while ((counter < numIterations) && !(isFormed)) {
 					color = board.getPosition(aux_X, y);
@@ -410,7 +420,7 @@ public class Game {
 	 * 
 	 */
 	
-public boolean checkDiagonal2() {
+	public boolean checkDiagonal2() {
 		boolean isFormed = false;
 		int y, x, tilesCounter, aux_X, aux_Y, numIterations;
 		Counter color, nextColor;
@@ -418,7 +428,7 @@ public boolean checkDiagonal2() {
 		y = 1; // Always start in the firt row
 		x = board.getWidth(); // Always start in the last column
 		color = board.getPosition(x, y);
-		numIterations = 0;
+		numIterations = 1;
 		// starting top right position
 		// Checks until the first diagonal
 		
@@ -426,9 +436,12 @@ public boolean checkDiagonal2() {
 			y = 1;
 			aux_X = x;
 			tilesCounter = 1;
-//			numIterations = board.getHeight() - x; // aqui tiene que estar el fallo como expresar las iteraciones
+			if (numIterations > board.getHeight())
+			{
+				numIterations = board.getHeight();
+			}
 			
-			while ((y <= numIterations) && !(isFormed)) { // o aqui
+			while ((y < numIterations) && !(isFormed)) { // o aqui
 				color = board.getPosition(aux_X, y);
 				nextColor = board.getPosition(aux_X + 1, y + 1);
 				
@@ -464,6 +477,10 @@ public boolean checkDiagonal2() {
 				aux_Y = y;
 				tilesCounter = 1;
 				numIterations = board.getHeight() - y + 1;//antes era width y sin el +1
+				if (numIterations > board.getWidth())
+				{
+					numIterations = board.getWidth();
+				}
 				
 				while ((x < numIterations) && !(isFormed)) {//<=
 					color = board.getPosition(x, aux_Y);
