@@ -365,7 +365,7 @@ public class Game {
 			color = board.getPosition(x, y);
 			int counter = 0;
 			
-			while ((x >= 1) && !(isFormed)) {
+			while ((x > 1) && !(isFormed)) {
 				y = board.getHeight();
 				aux_X = x;
 				tilesCounter = 1;
@@ -389,7 +389,7 @@ public class Game {
 					}	
 					y--;
 					aux_X++;
-					numIterations--;
+					
 					counter++;
 				}			
 				x--;
@@ -410,7 +410,7 @@ public class Game {
 	 * 
 	 */
 	
-	public boolean checkDiagonal2() {
+public boolean checkDiagonal2() {
 		boolean isFormed = false;
 		int y, x, tilesCounter, aux_X, aux_Y, numIterations;
 		Counter color, nextColor;
@@ -418,17 +418,17 @@ public class Game {
 		y = 1; // Always start in the firt row
 		x = board.getWidth(); // Always start in the last column
 		color = board.getPosition(x, y);
-		
+		numIterations = 0;
 		// starting top right position
 		// Checks until the first diagonal
 		
-		while ((x >= 1) && !(isFormed)) {
+		while ((x > 1) && !(isFormed)) {
 			y = 1;
 			aux_X = x;
 			tilesCounter = 1;
-			numIterations = board.getHeight() - x;
+//			numIterations = board.getHeight() - x; // aqui tiene que estar el fallo como expresar las iteraciones
 			
-			while ((y <= numIterations) && !(isFormed)) {
+			while ((y <= numIterations) && !(isFormed)) { // o aqui
 				color = board.getPosition(aux_X, y);
 				nextColor = board.getPosition(aux_X + 1, y + 1);
 				
@@ -448,6 +448,7 @@ public class Game {
 				aux_X++;
 			}			
 			x--;
+			numIterations++;
 		}
 		
 		if (!isFormed) {
