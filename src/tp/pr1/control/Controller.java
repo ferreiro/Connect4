@@ -38,7 +38,7 @@ public class Controller {
 					valid = game.executeMove(game.getTurn(), col);
 					
 					if (!valid) {
-						System.out.println("Movement not valid!");
+						System.out.println("Invalid move, please try again.");
 					}
 					
 				} while(!valid);
@@ -50,7 +50,7 @@ public class Controller {
 				undo = game.undo();
 				
 				if (!undo) {
-					System.out.println("Pues va a ser que no...");
+					System.out.println("Nothing to undo please try again");
 				}
 
 				break;
@@ -62,6 +62,7 @@ public class Controller {
 			case 3:
 				// Exist
 				exit = true;
+				System.out.println("Closing the game...");
 				break;
 				
 			}
