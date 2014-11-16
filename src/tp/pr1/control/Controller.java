@@ -33,7 +33,7 @@ public class Controller {
 				
 				do 
 				{
-					System.out.println("Colum: ");
+					System.out.println("Please provide the column number: ");
 					col = in.nextInt();
 					valid = game.executeMove(game.getTurn(), col);
 					
