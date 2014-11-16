@@ -48,6 +48,7 @@ public class Resources {
 	
 	public static int menu() {
 		int option = - 1;
+		String optionString = " ";
 		boolean valid = false;
 		
 		Scanner in = new Scanner(System.in);
@@ -55,9 +56,26 @@ public class Resources {
 		while(!valid) { 
 			System.out.println("0. Make a move   1. Undo");
 			System.out.println("2. Restart       3. Exit");
-			System.out.println(" ");
 			
-			option = in.nextInt();
+			System.out.println ("Please enter a command: ");
+			optionString = in.nextLine();
+			
+			if (optionString.equals("Make a move"))
+			{
+				option = 0;
+			}
+			else if (optionString.equals("Undo"))
+			{
+				option = 1;
+			}
+			else if (optionString.equals("Restart"))
+			{
+				option = 2;
+			}
+			else if (optionString.equals("Exit"))
+			{
+				option = 3;
+			}
 			
 			if (option >= 0 && option <= 3) {
 				valid = true;
